@@ -126,7 +126,9 @@ class TracyMiddleware
             Debugger::getBar()->addPanel(new \RunTracy\Helpers\IncludedFiles());
         }
         // check if enabled or blink if active critical value
-        if ((isset($cfg['showConsolePanel']) && $cfg['showConsolePanel']) || isset($cfg['configs']['ConsoleNoLogin']) && $cfg['configs']['ConsoleNoLogin']) {
+        if ((isset($cfg['showConsolePanel']) && $cfg['showConsolePanel'])
+            || isset($cfg['configs']['ConsoleNoLogin']) && $cfg['configs']['ConsoleNoLogin']
+        ) {
             Debugger::getBar()->addPanel(new \RunTracy\Helpers\ConsolePanel(
                 $this->defcfg['configs']
             ));
@@ -153,11 +155,11 @@ class TracyMiddleware
         }
 
         // hardcoded without config prevent switch off
-        if (!isset($this->defcfg) && !is_array($this->defcfg)) {
+        if (!isset($this->defcfg) || !is_array($this->defcfg)) {
             $this->defcfg = [];
         }
         Debugger::getBar()->addPanel(new PanelSelector(
-            $cfg,
+            $this->defcfg,
             array_diff_key($this->defcfg, ['configs' => null])
         ));
 
