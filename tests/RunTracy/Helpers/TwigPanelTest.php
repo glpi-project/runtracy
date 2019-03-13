@@ -33,7 +33,7 @@ class TwigPanelTest extends BaseTestCase
             $c = $app->getContainer();
 
             $c['twig_profile'] = function () {
-                return new \Twig_Profiler_Profile();
+                return new \Twig\Profiler\Profile();
             };
 
             $view = new \Slim\Views\Twig(
@@ -42,12 +42,12 @@ class TwigPanelTest extends BaseTestCase
             );
             // Add extensions
             $view->addExtension(new \Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
-            $view->addExtension(new \Twig_Extension_Profiler($c['twig_profile']));
-            $view->addExtension(new \Twig_Extension_Debug());
+            $view->addExtension(new \Twig\Extension\ProfilerExtension($c['twig_profile']));
+            $view->addExtension(new \Twig\Extension\DebugExtension());
 
             $this->assertInstanceOf('\Slim\App', $app);
             $this->assertInstanceOf('\Slim\Container', $c);
-            $this->assertInstanceOf('\Twig_Profiler_Profile', $c['twig_profile']);
+            $this->assertInstanceOf('\Twig\Profiler\Profile', $c['twig_profile']);
             $this->assertInstanceOf('\Slim\Views\Twig', $view);
 
             $panel = new \RunTracy\Helpers\TwigPanel($c['twig_profile']);

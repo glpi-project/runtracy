@@ -28,7 +28,7 @@ class TwigPanel implements IBarPanel
     public function __construct($data = null)
     {
         $this->data = $data;
-        $this->dumper = new \Twig_Profiler_Dumper_Html();
+        $this->dumper = new \Twig\Profiler\Dumper\HtmlDumper();
     }
 
     public function getTab()

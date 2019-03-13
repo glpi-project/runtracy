@@ -19,7 +19,7 @@ $c = $app->getContainer();
 
 // Twig
 $c['twig_profile'] = function () {
-    return new Twig_Profiler_Profile();
+    return new \Twig\Profiler\Profile();
 };
 
 $c['view'] = function (\Slim\Container $c) {
@@ -27,8 +27,8 @@ $c['view'] = function (\Slim\Container $c) {
     $view = new \Slim\Views\Twig($settings['template_path'], $settings['twig']);
     // Add extensions
     $view->addExtension(new Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
-    $view->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
-    $view->addExtension(new Twig_Extension_Debug());
+    $view->addExtension(new \Twig\Extension\ProfilerExtension($c['twig_profile']));
+    $view->addExtension(new \Twig\Extension\DebugExtension());
     return $view;
 };
 

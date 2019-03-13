@@ -26,7 +26,7 @@ now in package:
 | [Idiorm](https://github.com/j4mie/idiorm) | time, sql. panel & collector. **Note:** Idiorm support only one collector and if you use own this will not work. |
 | [Illuminate Database](https://github.com/illuminate/database) | sql, bindings |
 | **Template** | - |
-| [Twig](https://github.com/twigphp/Twig) | Twig_Profiler_Dumper_Html() |
+| [Twig](https://github.com/twigphp/Twig) | \Twig\Profiler\Dumper\HtmlDumper() |
 | **Common** | - |
 | PanelSelector | easy configure (part of fork from [TracyDebugger](https://github.com/adrianbj/TracyDebugger)) | 
 | PhpInfo | full phpinfo() |
@@ -54,11 +54,11 @@ $ composer require slim/twig-view
 $ composer require illuminate/database
 ```
 
-**2.2** add to your dependencies (Twig, Twig_Profiler) and/or Eloquent ORM like:
+**2.2** add to your dependencies (Twig, Twig\Profiler) and/or Eloquent ORM like:
 ```php
 // Twig
 $c['twig_profile'] = function () {
-    return new Twig_Profiler_Profile();
+    return new \Twig\Profiler\Profile();
 };
 
 $c['view'] = function ($c) {
@@ -66,8 +66,8 @@ $c['view'] = function ($c) {
     $view = new \Slim\Views\Twig($settings['template_path'], $settings['twig']);
     // Add extensions
     $view->addExtension(new Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
-    $view->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
-    $view->addExtension(new Twig_Extension_Debug());
+    $view->addExtension(new \Twig\Extension\ProfilerExtension($c['twig_profile']));
+    $view->addExtension(new \Twig\Extension\DebugExtension());
     return $view;
 };
 
